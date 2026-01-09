@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Fraction Activity 1: Equivalent Fractions, Simplifying & Comparing Fractions</title>
+    
+    <meta name="description" content="Interactive worksheet covers equivalent fractions, simplifying fractions using factorisation, and comparing fractions with common denominators.">
+    <meta property="og:title" content="Fraction Activity 1: Equivalent Fractions, Simplifying & Comparing Fractions">
+    <meta property="og:description" content="Interactive fraction activities for students.">
+    
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -811,6 +817,8 @@
                 document.getElementById('btnToPart2').style.display = 'none';
             }
         }
+
+        function goToGoogleForm() { window.open(FORM_URL, '_blank'); }
 
         window.onload = generatePart1;
 
