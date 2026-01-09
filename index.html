@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraction Activity 1: Equivalent Fractions, Simplifying & Comparing</title>
     
-    <title>Fraction Activity 1: Equivalent Fractions, Simplifying & Comparing Fractions</title>
-    
-    <meta name="description" content="Interactive worksheet covers equivalent fractions, simplifying fractions using factorisation, and comparing fractions with common denominators.">
-    <meta property="og:title" content="Fraction Activity 1: Equivalent Fractions, Simplifying & Comparing Fractions">
-    <meta property="og:description" content="Interactive fraction activities for students.">
+    <meta name="description" content="Interactive worksheet: Equivalent fractions, simplifying fractions, and comparing fractions.">
+    <meta property="og:title" content="Fraction Activity 1: Equivalent Fractions, Simplifying & Comparing">
     
     <style>
         body {
@@ -23,181 +21,52 @@
         }
 
         h1, h2 { color: #333; margin-bottom: 5px; text-align: center; }
-        
-        p.subtitle { 
-            color: #666; 
-            margin-top: 0; 
-            margin-bottom: 20px; 
-            text-align: center; 
-            max-width: 700px; 
-            line-height: 1.6; 
+        p.subtitle { color: #666; margin-top: 0; margin-bottom: 20px; text-align: center; max-width: 800px; line-height: 1.6; }
+
+        /* --- PROGRESS BAR --- */
+        .progress-wrapper {
+            display: flex;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 30px;
+            height: 30px;
+            background-color: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
         }
+
+        .progress-segment {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #aaa;
+            background-color: #e9ecef;
+            border-right: 1px solid #fff;
+            transition: all 0.4s ease;
+        }
+        .progress-segment:last-child { border-right: none; }
+
+        .progress-segment.active { background-color: #007bff; color: white; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
+        .progress-segment.done { background-color: #28a745; color: white; }
 
         /* --- CONTROLS --- */
-        .controls {
-            margin-bottom: 30px;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+        .controls { margin-bottom: 30px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
 
         button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            transition: all 0.2s;
-            color: white;
-            font-weight: bold;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 10px 20px; font-size: 16px; cursor: pointer;
+            border: none; border-radius: 5px; transition: all 0.2s;
+            color: white; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-
         .btn-reset { background-color: #ffc107; color: #333; }
-        .btn-reset:hover { background-color: #e0a800; }
-
         .btn-new { background-color: #007bff; }
-        .btn-new:hover { background-color: #0056b3; }
-        
-        .btn-help { background-color: #6f42c1; } 
-        .btn-help:hover { background-color: #59359a; }
+        .btn-help { background-color: #6f42c1; }
+        .nav-btn { background-color: #28a745; display: none; margin-top: 20px; animation: popIn 0.5s ease; }
 
-        /* Navigation Buttons */
-        .nav-btn {
-            background-color: #28a745;
-            display: none; 
-            margin-top: 20px;
-            font-size: 18px;
-            padding: 12px 25px;
-            animation: popIn 0.5s ease;
-        }
-        .nav-btn:hover { background-color: #218838; transform: scale(1.05); }
-
-        @keyframes popIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* --- MODAL (POPUP) STYLES --- */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(3px);
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 650px; 
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            animation: slideDown 0.3s ease;
-            text-align: center; /* Default center for certificates */
-        }
-
-        @keyframes slideDown {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px; right: 20px;
-            font-size: 28px; font-weight: bold;
-            color: #aaa; cursor: pointer;
-        }
-        .close-btn:hover { color: #333; }
-
-        .modal-title { margin-top: 0; color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .modal-body { font-size: 18px; line-height: 1.6; color: #444; text-align: left; }
-
-        /* --- CERTIFICATE STYLES --- */
-        .cert-container {
-            border: 5px solid #28a745;
-            padding: 20px;
-            border-radius: 10px;
-            background: #f0fff4;
-            margin-top: 20px;
-        }
-        .cert-name {
-            font-size: 32px;
-            font-weight: bold;
-            color: #28a745;
-            margin: 10px 0;
-            text-transform: capitalize;
-        }
-        .cert-time {
-            font-size: 16px;
-            color: #555;
-            font-weight: bold;
-        }
-        .cert-code {
-            font-family: monospace;
-            background: #eee;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 14px;
-            margin-top: 10px;
-            display: inline-block;
-        }
-        #nameInput {
-            padding: 10px;
-            font-size: 18px;
-            width: 70%;
-            margin-bottom: 10px;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-        }
-
-        /* --- VISUAL EXAMPLE STYLES --- */
-        .visual-example-container {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 160px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            margin: 20px 0;
-            border: 2px solid #e9ecef;
-        }
-
-        .visual-fractions {
-            display: flex;
-            align-items: center;
-            gap: 60px;
-            z-index: 2;
-        }
-
-        .arrow-svg {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* Cancellation Styles */
-        .cancel-red {
-            text-decoration: line-through;
-            text-decoration-thickness: 3px;
-            color: #dc3545; /* Red */
-        }
-        
-        .factor-text {
-            font-family: inherit; 
-            font-weight: bold;
-            font-size: 24px; /* Matches other numbers */
-        }
+        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
         /* --- WORKSHEET GRID --- */
         .worksheet-section {
@@ -224,81 +93,34 @@
         }
 
         /* --- FRACTION STYLING --- */
-        .problem-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .problem-row { display: flex; align-items: center; justify-content: center; }
 
         .problem-row-p3 {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            padding: 15px;
-            border-bottom: 1px dashed #eee;
+            display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+            padding: 15px; border-bottom: 1px dashed #eee;
         }
         .problem-row-p3:last-child { border-bottom: none; }
 
         .group-container { display: flex; align-items: center; }
-
-        .operator { 
-            margin: 0 10px; 
-            font-size: 30px; 
-            font-weight: bold;
-            color: #555;
-        }
-
-        .fraction {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0 5px;
-            font-size: 24px;
-        }
+        .operator { margin: 0 10px; font-size: 30px; font-weight: bold; color: #555; }
+        .fraction { display: flex; flex-direction: column; align-items: center; margin: 0 5px; font-size: 24px; }
 
         .numerator-container, .denominator-container {
-            width: 60px;
-            height: 45px;
-            display: flex;
-            justify-content: center;
-            box-sizing: border-box;
+            width: 60px; height: 45px; display: flex; justify-content: center; box-sizing: border-box;
         }
-        
-        .numerator-container {
-            border-bottom: 3px solid #333;
-            align-items: flex-end;
-            padding-bottom: 5px;
-        }
-        
-        .denominator-container {
-            align-items: flex-start;
-            padding-top: 5px;
-        }
+        .numerator-container { border-bottom: 3px solid #333; align-items: flex-end; padding-bottom: 5px; }
+        .denominator-container { align-items: flex-start; padding-top: 5px; }
 
-        .number-text { 
-            font-size: 28px; 
-            font-weight: bold; 
-            color: #333;
-            line-height: 1;
-        }
+        .number-text { font-size: 28px; font-weight: bold; color: #333; line-height: 1; }
         
         /* Modal specific sizing */
         .modal-fraction .number-text { font-size: 24px; }
         .modal-fraction .numerator-container, .modal-fraction .denominator-container {
             width: auto; padding-left: 5px; padding-right: 5px; min-width: 40px; height: 35px;
         }
-        
         .modal-box {
-            width: 35px; height: 30px; 
-            border: 2px solid #6f42c1; 
-            display: inline-block; 
-            border-radius: 4px;
-            text-align: center;
-            line-height: 26px;
-            color: #6f42c1;
-            font-weight: bold;
-            background: #fff;
+            width: 35px; height: 30px; border: 2px solid #6f42c1; display: inline-block; 
+            border-radius: 4px; text-align: center; line-height: 26px; color: #6f42c1; font-weight: bold; background: #fff;
         }
 
         /* --- INPUTS --- */
@@ -307,12 +129,11 @@
             font-family: inherit; font-weight: bold; font-size: 24px;
             color: #333; text-align: center;
             border: 2px solid #ccc; border-radius: 6px;
-            outline: none; -moz-appearance: textfield;
-            background-color: #fafafa;
+            outline: none; background-color: #fafafa;
+            -moz-appearance: textfield;
         }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         input:focus { background-color: #fff; border-color: #666; }
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
         /* --- SELECTOR --- */
         select.symbol-selector {
@@ -326,6 +147,30 @@
         .incorrect { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24 !important; }
         .partial { background-color: #fff3cd !important; border-color: #ffc107 !important; color: #856404 !important; }
 
+        /* --- MODALS --- */
+        .modal-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:1000; justify-content:center; align-items:center; backdrop-filter: blur(3px); }
+        .modal-content { background:white; padding:30px; border-radius:15px; width:90%; max-width:650px; position:relative; box-shadow:0 10px 25px rgba(0,0,0,0.3); animation:slideDown 0.3s ease; text-align: center; }
+        @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .close-btn { position:absolute; top:15px; right:20px; font-size:28px; font-weight:bold; color:#aaa; cursor:pointer; }
+        .modal-title { margin-top:0; color:#333; border-bottom:2px solid #eee; padding-bottom:10px; }
+        .modal-body { font-size:18px; line-height:1.6; color:#444; text-align: left; }
+
+        /* --- VISUAL EXAMPLE STYLES --- */
+        .visual-example-container {
+            position: relative; display: flex; justify-content: center; align-items: center;
+            height: 160px; background: #f8f9fa; border-radius: 10px; margin: 20px 0; border: 2px solid #e9ecef;
+        }
+        .visual-fractions { display: flex; align-items: center; gap: 60px; z-index: 2; }
+        .arrow-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .cancel-red { text-decoration: line-through; text-decoration-thickness: 3px; color: #dc3545; }
+        .factor-text { font-family: inherit; font-weight: bold; font-size: 24px; }
+
+        /* Certificate */
+        .cert-container { border: 5px solid #28a745; padding: 20px; border-radius: 10px; background: #f0fff4; margin-top: 20px; text-align: center;}
+        .cert-name { font-size: 32px; font-weight: bold; color: #28a745; margin: 10px 0; text-transform: capitalize; }
+        .cert-code { font-family: monospace; background: #eee; padding: 5px 10px; border-radius: 4px; font-size: 14px; margin-top: 10px; display: inline-block; }
+        #nameInput { padding: 10px; font-size: 18px; width: 70%; margin-bottom: 10px; border: 2px solid #ccc; border-radius: 5px; }
+
     </style>
 </head>
 <body>
@@ -333,9 +178,15 @@
     <h1 id="mainTitle">Part 1: Equivalent Fractions</h1>
     <p class="subtitle" id="subTitle">Fill in the missing box to make the fractions equivalent.</p>
     
+    <div class="progress-wrapper">
+        <div class="progress-segment" id="prog1">Part 1</div>
+        <div class="progress-segment" id="prog2">Part 2</div>
+        <div class="progress-segment" id="prog3">Part 3</div>
+    </div>
+
     <div class="controls">
         <button class="btn-help" onclick="openHelp()">How do I do this?</button>
-        <button class="btn-reset" onclick="resetCurrentPart()">Reset Section</button>
+        <button class="btn-reset" onclick="resetSection()">Reset Section</button>
         <button class="btn-new" onclick="generateCurrentPart()">New Problems</button>
     </div>
 
@@ -344,17 +195,16 @@
     <div id="part3" class="worksheet-section hidden"></div>
 
     <div style="text-align:center; height: 100px;">
-        <button id="btnToPart2" class="nav-btn" onclick="startPart2()">Done! Go to Part 2 &rarr;</button>
-        <button id="btnToPart3" class="nav-btn" onclick="startPart3()">Great Job! Go to Part 3 &rarr;</button>
-        <button id="btnSubmit" class="nav-btn" onclick="openCertificateModal()">✅ Finish & Get Certificate</button>
+        <button id="btnPart1" class="nav-btn" onclick="switchPart(2)">Done! Go to Part 2 &rarr;</button>
+        <button id="btnPart2" class="nav-btn" onclick="switchPart(3)">Great Job! Go to Part 3 &rarr;</button>
+        <button id="btnFinish" class="nav-btn" onclick="openCertificateModal()">✅ Finish & Get Certificate</button>
     </div>
 
     <div id="helpModal" class="modal-overlay" onclick="closeHelpOutside(event)">
         <div class="modal-content">
             <span class="close-btn" onclick="closeHelp()">&times;</span>
             <h2 class="modal-title" id="modalTitle">Example</h2>
-            <div class="modal-body" id="modalBody">
-                </div>
+            <div class="modal-body" id="modalBody"></div>
         </div>
     </div>
 
@@ -368,13 +218,12 @@
                 <br><br>
                 <button class="btn-new" onclick="generateCertificate()">Generate Certificate</button>
             </div>
-            
             <div id="certDisplay" style="display:none;">
                 <p><strong>Take a Screenshot</strong> of this green box and submit it to your teacher.</p>
                 <div class="cert-container">
-                    <div>⭐ FRACTION MASTERY ⭐</div>
+                    <div>⭐ FRACTION MASTERY: BASICS ⭐</div>
                     <div class="cert-name" id="display-name">Student Name</div>
-                    <div class="cert-time" id="display-time"></div>
+                    <div style="font-weight:bold; color:#555;" id="display-time"></div>
                     <div>Has successfully completed all 3 sections.</div>
                     <div class="cert-code" id="display-code"></div>
                 </div>
@@ -383,165 +232,17 @@
     </div>
 
     <script>
-        // ==========================================
-        // CONFIGURATION
-        // ==========================================
+        // CONFIG
         const QUESTIONS_P1 = 6;
         const QUESTIONS_P2 = 6;
         const QUESTIONS_P3 = 5; 
         let currentPart = 1;
 
-        // ==========================================
         // UTILS
-        // ==========================================
         function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
         function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
 
-        // ==========================================
-        // CERTIFICATE LOGIC
-        // ==========================================
-        function openCertificateModal() {
-            document.getElementById('certModal').style.display = 'flex';
-            document.getElementById('certEntry').style.display = 'block';
-            document.getElementById('certDisplay').style.display = 'none';
-        }
-
-        function closeCert() {
-            document.getElementById('certModal').style.display = 'none';
-        }
-
-        function generateCertificate() {
-            const name = document.getElementById('nameInput').value.trim();
-            if(!name) { alert("Please enter your name."); return; }
-
-            const now = new Date();
-            const dateString = now.toLocaleDateString() + " " + now.toLocaleTimeString();
-            const randomCode = "Code: " + Math.floor(1000 + Math.random() * 9000);
-
-            document.getElementById('display-name').innerText = name;
-            document.getElementById('display-time').innerText = dateString;
-            document.getElementById('display-code').innerText = randomCode;
-
-            document.getElementById('certEntry').style.display = 'none';
-            document.getElementById('certDisplay').style.display = 'block';
-        }
-
-        // ==========================================
-        // MODAL / HELP LOGIC (UPDATED WITH YOUR TEXT)
-        // ==========================================
-        function openHelp() {
-            const modal = document.getElementById('helpModal');
-            const title = document.getElementById('modalTitle');
-            const body = document.getElementById('modalBody');
-
-            if(currentPart === 1) {
-                // PART 1: Updated with "Numerator/Denominator" language
-                title.innerText = "Part 1: How to find Equivalent Fractions";
-                body.innerHTML = `
-                    <p>To find the missing number, look at how the bottom number changes. You must do the exact same thing to the top.</p>
-                    
-                    <div class="visual-example-container">
-                        <svg class="arrow-svg" viewBox="0 0 300 160" preserveAspectRatio="none">
-                            <defs>
-                                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-                                    <polygon points="0 0, 10 3.5, 0 7" fill="#6f42c1" />
-                                </marker>
-                            </defs>
-                            <path d="M 115 50 Q 150 10 185 50" stroke="#6f42c1" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
-                            <text x="150" y="25" text-anchor="middle" fill="#6f42c1" font-weight="bold" font-size="16">× 4</text>
-                            <path d="M 115 110 Q 150 150 185 110" stroke="#6f42c1" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
-                            <text x="150" y="145" text-anchor="middle" fill="#6f42c1" font-weight="bold" font-size="16">× 4</text>
-                        </svg>
-
-                        <div class="visual-fractions">
-                            <div class="fraction modal-fraction">
-                                <div class="numerator-container"><span class="number-text">1</span></div>
-                                <div class="denominator-container"><span class="number-text">2</span></div>
-                            </div>
-                            <span class="operator">=</span>
-                            <div class="fraction modal-fraction">
-                                <div class="numerator-container"><div class="modal-box">4</div></div>
-                                <div class="denominator-container"><span class="number-text">8</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p>1. <strong>Denominator</strong> (bottom number): 2 goes to 8. (2 × 4 = 8)<br>
-                    2. <strong>Numerator</strong> (top number): Do the same! (1 × 4 = <strong>4</strong>)</p>
-                `;
-            } else if(currentPart === 2) {
-                // PART 2: Factorise & Cancel
-                title.innerText = "Part 2: How to Simplify";
-                body.innerHTML = `
-                    <p>Find a <strong>common factor</strong>: Which times table has both 4 and 8 in it?</p>
-                    <p>In the fraction 4/8, both 4 and 8 are in the <strong>4-times table</strong>. So we factorise:</p>
-                    
-                    <div style="display:flex; align-items:center; justify-content:center; gap:15px; background:#f8f9fa; padding:15px; border-radius:10px; margin:15px 0;">
-                        <div class="fraction modal-fraction">
-                            <div class="numerator-container"><span class="number-text">4</span></div>
-                            <div class="denominator-container"><span class="number-text">8</span></div>
-                        </div>
-                        <span class="operator">=</span>
-                        <div class="fraction modal-fraction" style="font-size:20px;">
-                            <div class="numerator-container" style="width:auto; white-space:nowrap;">
-                                <span class="factor-text"><span class="cancel-red">4</span> × 1</span>
-                            </div>
-                            <div class="denominator-container" style="width:auto; white-space:nowrap;">
-                                <span class="factor-text"><span class="cancel-red">4</span> × 2</span>
-                            </div>
-                        </div>
-                        <span class="operator">=</span>
-                        <div class="fraction modal-fraction">
-                            <div class="numerator-container"><span class="number-text">1</span></div>
-                            <div class="denominator-container"><span class="number-text">2</span></div>
-                        </div>
-                    </div>
-
-                    <p>1. Factorise: Write them as multiples (4×1 and 4×2).</p>
-                    <p>2. <strong>Cancel the common factor</strong> (the 4s).</p>
-                    <p><strong>Answer: 1/2</strong></p>
-                `;
-            } else {
-                // PART 3: Updated with "Same Denominator" language
-                title.innerText = "Part 3: Comparing Fractions";
-                body.innerHTML = `
-                    <p>It is hard to compare fractions with different <strong>denominators</strong> (bottoms). You must create <strong>equivalent fractions</strong> (like in Part 1) so they have the same denominator.</p>
-                    
-                     <div style="display:flex; align-items:center; justify-content:center; gap:20px; background:#f8f9fa; padding:15px; border-radius:10px; margin:15px 0;">
-                        <div class="fraction modal-fraction">
-                            <div class="numerator-container"><span class="number-text">1</span></div>
-                            <div class="denominator-container"><span class="number-text">2</span></div>
-                        </div>
-                        <span class="operator">vs</span>
-                        <div class="fraction modal-fraction">
-                            <div class="numerator-container"><span class="number-text">1</span></div>
-                            <div class="denominator-container"><span class="number-text">3</span></div>
-                        </div>
-                    </div>
-
-                    <p>1. A possible <strong> common denominator </strong> is <strong>6</strong> (because 2 × 3 = 6).</p>
-                    <p>2. Convert to <strong>equivalent fractions</strong> with the <strong> same denominator</strong>:<br>
-                       1/2 = <strong>3/6</strong> (multiply top & bottom by 3)<br>
-                       1/3 = <strong>2/6</strong> (multiply top & bottom by 2)</p>
-                    <p>3. Now compare: 3/6 is bigger than 2/6, so <strong>1/2 > 1/3</strong>.</p>
-                `;
-            }
-            modal.style.display = 'flex';
-        }
-
-        function closeHelp() {
-            document.getElementById('helpModal').style.display = 'none';
-        }
-
-        function closeHelpOutside(event) {
-            if (event.target === document.getElementById('helpModal')) {
-                closeHelp();
-            }
-        }
-
-        // ==========================================
-        // HTML BUILDERS & LOGIC
-        // ==========================================
+        // HTML BUILDERS
         function buildInputOrText(val, isInput, answer, placeholder="?", className="box") {
             if (isInput) {
                 if(currentPart === 1) {
@@ -566,12 +267,9 @@
                 </div>`;
         }
 
-        // PART 1
+        // --- PART 1 ---
         function generatePart1() {
-            const grid = document.getElementById('part1');
-            grid.innerHTML = '';
-            document.getElementById('btnToPart2').style.display = 'none';
-
+            const grid = document.getElementById('part1'); grid.innerHTML = '';
             for (let i = 0; i < QUESTIONS_P1; i++) {
                 const baseNum = getRandomInt(1, 9);
                 const baseDen = getRandomInt(baseNum + 1, 12);
@@ -589,6 +287,7 @@
                 row.innerHTML = createFractionHTML(n1, d1, n2, d2);
                 grid.appendChild(row);
             }
+            updateCheck();
         }
         function checkPart1(input) {
             const ans = input.value;
@@ -597,15 +296,12 @@
             if (ans === '') return;
             if (ans === correct) input.classList.add('correct');
             else input.classList.add('incorrect');
-            checkGlobalCompletion('.p1-box', 'btnToPart2');
+            updateCheck();
         }
 
-        // PART 2
+        // --- PART 2 ---
         function generatePart2() {
-            const grid = document.getElementById('part2');
-            grid.innerHTML = '';
-            document.getElementById('btnToPart3').style.display = 'none';
-
+            const grid = document.getElementById('part2'); grid.innerHTML = '';
             for (let i = 0; i < QUESTIONS_P2; i++) {
                 let sNum, sDen;
                 do {
@@ -632,6 +328,7 @@
                 document.getElementById(`p2-num-${i}`).addEventListener('input', () => checkPart2(i));
                 document.getElementById(`p2-den-${i}`).addEventListener('input', () => checkPart2(i));
             }
+            updateCheck();
         }
         function checkPart2(rowIndex) {
             const numInput = document.getElementById(`p2-num-${rowIndex}`);
@@ -657,14 +354,12 @@
                     numInput.classList.add('partial'); denInput.classList.add('partial');
                 }
             }
-            checkGlobalCompletion('.p2-box', 'btnToPart3');
+            updateCheck();
         }
 
-        // PART 3
+        // --- PART 3 ---
         function generatePart3() {
-            const grid = document.getElementById('part3');
-            grid.innerHTML = '';
-            document.getElementById('btnSubmit').style.display = 'none';
+            const grid = document.getElementById('part3'); grid.innerHTML = '';
             const equalsIndex = getRandomInt(0, QUESTIONS_P3 - 1);
 
             for (let i = 0; i < QUESTIONS_P3; i++) {
@@ -715,6 +410,7 @@
                     document.getElementById(id).addEventListener('input', () => checkPart3(i));
                 });
             }
+            updateCheck();
         }
         function checkPart3(rowIndex) {
             const un1 = document.getElementById(`p3-n1-${rowIndex}`);
@@ -759,41 +455,53 @@
                 if(sel.value === correctSym) sel.classList.add('correct');
                 else sel.classList.add('incorrect');
             }
-
-            let allCorrect = true;
-            document.querySelectorAll('.p3-box').forEach(b => { if(!b.classList.contains('correct')) allCorrect = false; });
-            document.querySelectorAll('.symbol-selector').forEach(s => { if(!s.classList.contains('correct')) allCorrect = false; });
-            if (allCorrect) document.getElementById('btnSubmit').style.display = 'inline-block';
-            else document.getElementById('btnSubmit').style.display = 'none';
+            updateCheck();
         }
 
-        // NAVIGATION & HELPERS
-        function checkGlobalCompletion(selector, btnId) {
+        // --- NAVIGATION & UTILS ---
+        function updateCheck() {
+            let selector, btnId;
+            if(currentPart === 1) { selector = '.p1-box'; btnId = 'btnPart1'; }
+            else if(currentPart === 2) { selector = '.p2-box'; btnId = 'btnPart2'; }
+            else { selector = '#part3 input, #part3 select'; btnId = 'btnFinish'; }
+
             const all = document.querySelectorAll(selector);
             let ok = true;
-            all.forEach(b => { if(!b.classList.contains('correct')) ok = false; });
-            if (ok && all.length > 0) document.getElementById(btnId).style.display = 'inline-block';
+            let count = 0;
+            all.forEach(b => { 
+                count++;
+                if(!b.classList.contains('correct')) ok = false; 
+            });
+            if(ok && count > 0) document.getElementById(btnId).style.display = 'inline-block';
             else document.getElementById(btnId).style.display = 'none';
         }
 
-        function startPart2() {
-            currentPart = 2;
-            document.getElementById('part1').classList.add('hidden');
-            document.getElementById('part2').classList.remove('hidden');
-            document.getElementById('btnToPart2').style.display = 'none';
-            document.getElementById('mainTitle').innerText = "Part 2: Simplify Fractions";
-            document.getElementById('subTitle').innerHTML = "Reduce the fraction on the left to its simplest form.";
-            generatePart2();
+        function switchPart(p) {
+            document.getElementById(`part${currentPart}`).classList.add('hidden');
+            document.getElementById(currentPart===3 ? 'btnFinish' : `btnPart${currentPart}`).style.display = 'none';
+            currentPart = p;
+            document.getElementById(`part${p}`).classList.remove('hidden');
+            
+            // Titles
+            const titles = {
+                1: ["Part 1: Equivalent Fractions", "Fill in the missing box to make the fractions equivalent."],
+                2: ["Part 2: Simplify Fractions", "Reduce the fraction on the left to its simplest form."],
+                3: ["Part 3: Comparing Fractions", "1. Create equivalent fractions with a common denominator.<br>2. Select the correct symbol (<, >, =)."]
+            };
+            document.getElementById('mainTitle').innerText = titles[p][0];
+            document.getElementById('subTitle').innerHTML = titles[p][1];
+            
+            updateProgressBar(p);
+            generateCurrentPart();
         }
 
-        function startPart3() {
-            currentPart = 3;
-            document.getElementById('part2').classList.add('hidden');
-            document.getElementById('part3').classList.remove('hidden');
-            document.getElementById('btnToPart3').style.display = 'none';
-            document.getElementById('mainTitle').innerText = "Part 3: Comparing Fractions";
-            document.getElementById('subTitle').innerHTML = "1. Create equivalent fractions with a common denominator.<br>2. Select the correct symbol (<, >, =).";
-            generatePart3();
+        function updateProgressBar(p) {
+            [1,2,3].forEach(i => {
+                const el = document.getElementById(`prog${i}`);
+                el.className = 'progress-segment';
+                if(i < p) el.classList.add('done');
+                if(i === p) el.classList.add('active');
+            });
         }
 
         function generateCurrentPart() {
@@ -802,25 +510,104 @@
             else generatePart3();
         }
 
-        function resetCurrentPart() {
-            const cls = currentPart === 1 ? '.p1-box' : (currentPart === 2 ? '.p2-box' : '.p3-box');
-            document.querySelectorAll(cls).forEach(inp => {
+        function resetSection() {
+            // Clears inputs but keeps numbers
+            const selector = currentPart === 1 ? '.p1-box' : (currentPart === 2 ? '.p2-box' : '.p3-box, .symbol-selector');
+            document.querySelectorAll(selector).forEach(inp => {
                 inp.value = '';
-                inp.className = cls.replace('.', '');
+                inp.classList.remove('correct', 'incorrect', 'partial');
+                if(inp.tagName === 'SELECT') inp.className = 'symbol-selector';
             });
-            if(currentPart === 3) {
-                document.querySelectorAll('.symbol-selector').forEach(s => { s.value = ''; s.className = 'symbol-selector'; });
-                document.getElementById('btnSubmit').style.display = 'none';
-            } else if(currentPart === 2) {
-                document.getElementById('btnToPart3').style.display = 'none';
-            } else {
-                document.getElementById('btnToPart2').style.display = 'none';
-            }
+            updateCheck();
         }
 
-        function goToGoogleForm() { window.open(FORM_URL, '_blank'); }
+        // --- MODAL & CERT ---
+        function openHelp() {
+            const modal = document.getElementById('helpModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
 
-        window.onload = generatePart1;
+            if(currentPart === 1) {
+                title.innerText = "Part 1: How to find Equivalent Fractions";
+                body.innerHTML = `
+                    <p>To find the missing number, look at how the bottom number changes. You must do the exact same thing to the top.</p>
+                    <div class="visual-example-container">
+                        <svg class="arrow-svg" viewBox="0 0 300 160" preserveAspectRatio="none">
+                            <defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#6f42c1" /></marker></defs>
+                            <path d="M 115 50 Q 150 10 185 50" stroke="#6f42c1" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+                            <text x="150" y="25" text-anchor="middle" fill="#6f42c1" font-weight="bold" font-size="16">× 4</text>
+                            <path d="M 115 110 Q 150 150 185 110" stroke="#6f42c1" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+                            <text x="150" y="145" text-anchor="middle" fill="#6f42c1" font-weight="bold" font-size="16">× 4</text>
+                        </svg>
+                        <div class="visual-fractions">
+                            <div class="fraction modal-fraction"><div class="numerator-container"><span class="number-text">1</span></div><div class="denominator-container"><span class="number-text">2</span></div></div>
+                            <span class="operator">=</span>
+                            <div class="fraction modal-fraction"><div class="numerator-container"><div class="modal-box">4</div></div><div class="denominator-container"><span class="number-text">8</span></div></div>
+                        </div>
+                    </div>
+                    <p>1. <strong>Denominator</strong> (bottom number): 2 goes to 8. (2 × 4 = 8)<br>2. <strong>Numerator</strong> (top number): Do the same! (1 × 4 = <strong>4</strong>)</p>
+                `;
+            } else if(currentPart === 2) {
+                title.innerText = "Part 2: How to Simplify";
+                body.innerHTML = `
+                    <p>Find a <strong>common factor</strong>: Which times table has both 4 and 8 in it?</p>
+                    <p>In the fraction 4/8, both 4 and 8 are in the <strong>4-times table</strong>. So we factorise:</p>
+                    <div style="display:flex; align-items:center; justify-content:center; gap:15px; background:#f8f9fa; padding:15px; border-radius:10px; margin:15px 0;">
+                        <div class="fraction modal-fraction"><div class="numerator-container"><span class="number-text">4</span></div><div class="denominator-container"><span class="number-text">8</span></div></div>
+                        <span class="operator">=</span>
+                        <div class="fraction modal-fraction" style="font-size:20px;">
+                            <div class="numerator-container" style="width:auto; white-space:nowrap;"><span class="factor-text"><span class="cancel-red">4</span> × 1</span></div>
+                            <div class="denominator-container" style="width:auto; white-space:nowrap;"><span class="factor-text"><span class="cancel-red">4</span> × 2</span></div>
+                        </div>
+                        <span class="operator">=</span>
+                        <div class="fraction modal-fraction"><div class="numerator-container"><span class="number-text">1</span></div><div class="denominator-container"><span class="number-text">2</span></div></div>
+                    </div>
+                    <p>1. Factorise: Write them as multiples (4×1 and 4×2).</p>
+                    <p>2. <strong>Cancel the common factor</strong> (the 4s).</p>
+                    <p><strong>Answer: 1/2</strong></p>
+                `;
+            } else {
+                title.innerText = "Part 3: Comparing Fractions";
+                body.innerHTML = `
+                    <p>It is hard to compare fractions with different <strong>denominators</strong> (bottoms). You must create <strong>equivalent fractions</strong> (like in Part 1) so they have the same denominator.</p>
+                     <div style="display:flex; align-items:center; justify-content:center; gap:20px; background:#f8f9fa; padding:15px; border-radius:10px; margin:15px 0;">
+                        <div class="fraction modal-fraction"><div class="numerator-container"><span class="number-text">1</span></div><div class="denominator-container"><span class="number-text">2</span></div></div>
+                        <span class="operator">vs</span>
+                        <div class="fraction modal-fraction"><div class="numerator-container"><span class="number-text">1</span></div><div class="denominator-container"><span class="number-text">3</span></div></div>
+                    </div>
+                    <p>1. A possible <strong> common denominator </strong> is <strong>6</strong> (because 2 × 3 = 6).</p>
+                    <p>2. Convert to <strong>equivalent fractions</strong> with the <strong> same denominator</strong>:<br>
+                       1/2 = <strong>3/6</strong> (multiply top & bottom by 3)<br>
+                       1/3 = <strong>2/6</strong> (multiply top & bottom by 2)</p>
+                    <p>3. Now compare: 3/6 is bigger than 2/6, so <strong>1/2 > 1/3</strong>.</p>
+                `;
+            }
+            modal.style.display = 'flex';
+        }
+
+        function closeHelp() { document.getElementById('helpModal').style.display = 'none'; }
+        function closeHelpOutside(event) { if (event.target === document.getElementById('helpModal')) closeHelp(); }
+        
+        function openCertificateModal() { document.getElementById('certModal').style.display = 'flex'; document.getElementById('certEntry').style.display = 'block'; document.getElementById('certDisplay').style.display = 'none'; }
+        function closeCert() { document.getElementById('certModal').style.display = 'none'; }
+
+        function generateCertificate() {
+            const name = document.getElementById('nameInput').value.trim();
+            if(!name) { alert("Please enter your name."); return; }
+            document.getElementById('display-name').innerText = name;
+            document.getElementById('display-time').innerText = new Date().toLocaleString();
+            document.getElementById('display-code').innerText = "Code: " + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('certEntry').style.display = 'none';
+            document.getElementById('certDisplay').style.display = 'block';
+            
+            // Mark all segments done
+            [1,2,3].forEach(i => document.getElementById(`prog${i}`).className = 'progress-segment done');
+        }
+
+        window.onload = function() {
+            updateProgressBar(1);
+            generatePart1();
+        };
 
     </script>
 </body>
