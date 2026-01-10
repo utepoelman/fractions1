@@ -3,220 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fractions with Nugget 1: Equivalent Fractions, Simplifying & Comparing</title>
-    
+    <title>Fractions with Nugget 1</title>
     <meta name="description" content="Interactive worksheet: Equivalent fractions, simplifying fractions, and comparing fractions.">
-    <meta property="og:title" content="Fraction Activity 1: Equivalent Fractions, Simplifying & Comparing">
     
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
         h1, h2 { color: #333; margin-bottom: 5px; text-align: center; }
         p.subtitle { color: #666; margin-top: 0; margin-bottom: 20px; text-align: center; max-width: 800px; line-height: 1.6; }
 
-        /* --- PROGRESS BAR --- */
-        .progress-wrapper {
-            display: flex;
-            width: 100%;
-            max-width: 800px;
-            margin-bottom: 30px;
-            height: 30px;
-            background-color: #e9ecef;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .progress-segment {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: bold;
-            color: #aaa;
-            background-color: #e9ecef;
-            border-right: 1px solid #fff;
-            transition: all 0.4s ease;
-        }
+        /* PROGRESS BAR */
+        .progress-wrapper { display: flex; width: 100%; max-width: 800px; margin-bottom: 30px; height: 30px; background-color: #e9ecef; border-radius: 15px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
+        .progress-segment { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; color: #aaa; background-color: #e9ecef; border-right: 1px solid #fff; transition: all 0.4s ease; }
         .progress-segment:last-child { border-right: none; }
-
         .progress-segment.active { background-color: #007bff; color: white; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
         .progress-segment.done { background-color: #28a745; color: white; }
 
-        /* --- CONTROLS --- */
+        /* CONTROLS */
         .controls { margin-bottom: 30px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-
-        button {
-            padding: 10px 20px; font-size: 16px; cursor: pointer;
-            border: none; border-radius: 5px; transition: all 0.2s;
-            color: white; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; border: none; border-radius: 5px; transition: all 0.2s; color: white; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .btn-reset { background-color: #ffc107; color: #333; }
         .btn-new { background-color: #007bff; }
         .btn-help { background-color: #6f42c1; }
         .btn-help:hover { background-color: #5a32a3; transform: scale(1.05); }
         .nav-btn { background-color: #28a745; display: none; margin-top: 20px; animation: popIn 0.5s ease; }
-
         @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-        /* --- WORKSHEET GRID --- */
-        .worksheet-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px 60px;
-            background: white;
-            padding: 50px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            max-width: 900px;
-            width: 100%;
-            margin-bottom: 30px;
-        }
-        
+        /* GRID */
+        .worksheet-section { display: grid; grid-template-columns: 1fr 1fr; gap: 50px 60px; background: white; padding: 50px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 900px; width: 100%; margin-bottom: 30px; }
         #part3 { grid-template-columns: 1fr; gap: 40px; }
         .hidden { display: none !important; }
+        @media (max-width: 700px) { .worksheet-section { grid-template-columns: 1fr; } .problem-row-p3 { flex-direction: column; gap: 20px; } .visual-fractions { gap: 40px; } .modal-content { width: 95%; padding: 20px; } }
 
-        @media (max-width: 700px) {
-            .worksheet-section { grid-template-columns: 1fr; }
-            .problem-row-p3 { flex-direction: column; gap: 20px; }
-            .visual-fractions { gap: 40px; }
-            .modal-content { width: 95%; padding: 20px; }
-        }
-
-        /* --- FRACTION STYLING --- */
+        /* FRACTIONS */
         .problem-row { display: flex; align-items: center; justify-content: center; }
-
-        .problem-row-p3 {
-            display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
-            padding: 15px; border-bottom: 1px dashed #eee;
-        }
+        .problem-row-p3 { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; padding: 15px; border-bottom: 1px dashed #eee; }
         .problem-row-p3:last-child { border-bottom: none; }
-
         .group-container { display: flex; align-items: center; }
         .operator { margin: 0 10px; font-size: 30px; font-weight: bold; color: #555; }
         .fraction { display: flex; flex-direction: column; align-items: center; margin: 0 5px; font-size: 24px; }
-
-        .numerator-container, .denominator-container {
-            width: 60px; height: 45px; display: flex; justify-content: center; box-sizing: border-box;
-        }
+        .numerator-container, .denominator-container { width: 60px; height: 45px; display: flex; justify-content: center; box-sizing: border-box; }
         .numerator-container { border-bottom: 3px solid #333; align-items: flex-end; padding-bottom: 5px; }
         .denominator-container { align-items: flex-start; padding-top: 5px; }
-
         .number-text { font-size: 28px; font-weight: bold; color: #333; line-height: 1; }
         
         /* Modal specific sizing */
         .modal-fraction .number-text { font-size: 24px; }
-        .modal-fraction .numerator-container, .modal-fraction .denominator-container {
-            width: auto; padding-left: 5px; padding-right: 5px; min-width: 40px; height: 35px;
-        }
-        .modal-box {
-            width: 35px; height: 30px; border: 2px solid #6f42c1; display: inline-block; 
-            border-radius: 4px; text-align: center; line-height: 26px; color: #6f42c1; font-weight: bold; background: #fff;
-        }
+        .modal-fraction .numerator-container, .modal-fraction .denominator-container { width: auto; padding-left: 5px; padding-right: 5px; min-width: 40px; height: 35px; }
+        .modal-box { width: 35px; height: 30px; border: 2px solid #6f42c1; display: inline-block; border-radius: 4px; text-align: center; line-height: 26px; color: #6f42c1; font-weight: bold; background: #fff; }
 
-        /* --- INPUTS --- */
-        input[type="number"] {
-            width: 45px; height: 34px;
-            font-family: inherit; font-weight: bold; font-size: 24px;
-            color: #333; text-align: center;
-            border: 2px solid #ccc; border-radius: 6px;
-            outline: none; background-color: #fafafa;
-            -moz-appearance: textfield;
-        }
+        /* INPUTS */
+        input[type="number"] { width: 45px; height: 34px; font-family: inherit; font-weight: bold; font-size: 24px; color: #333; text-align: center; border: 2px solid #ccc; border-radius: 6px; outline: none; background-color: #fafafa; -moz-appearance: textfield; }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         input:focus { background-color: #fff; border-color: #666; }
+        select.symbol-selector { font-size: 24px; padding: 5px 10px; margin: 0 20px; border: 2px solid #ccc; border-radius: 8px; background-color: white; cursor: pointer; font-weight: bold; }
 
-        /* --- SELECTOR --- */
-        select.symbol-selector {
-            font-size: 24px; padding: 5px 10px; margin: 0 20px;
-            border: 2px solid #ccc; border-radius: 8px;
-            background-color: white; cursor: pointer; font-weight: bold;
-        }
-
-        /* --- FEEDBACK STATES --- */
+        /* FEEDBACK */
         .correct { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724 !important; }
         .incorrect { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24 !important; }
         .partial { background-color: #fff3cd !important; border-color: #ffc107 !important; color: #856404 !important; }
 
-        /* --- MODALS --- */
+        /* MODALS & NUGGET */
         .modal-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:1000; justify-content:center; align-items:center; backdrop-filter: blur(3px); }
-        .modal-content { background:white; padding:30px; border-radius:15px; width:90%; max-width:850px; position:relative; box-shadow:0 10px 25px rgba(0,0,0,0.3); animation:slideDown 0.3s ease; text-align: center; max-height: 90vh; overflow-y: auto; }
-        @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-content { background:white; padding:30px; border-radius:15px; width:90%; max-width:850px; position:relative; box-shadow:0 10px 25px rgba(0,0,0,0.3); text-align: center; max-height: 90vh; overflow-y: auto; }
         .close-btn { position:absolute; top:15px; right:20px; font-size:28px; font-weight:bold; color:#aaa; cursor:pointer; }
         .modal-title { margin-top:0; color:#333; border-bottom:2px solid #eee; padding-bottom:10px; }
         .modal-body { font-size:18px; line-height:1.6; color:#444; text-align: left; }
 
-        /* NUGGET STYLES */
         .help-layout { display: flex; gap: 25px; align-items: flex-start; }
         .nugget-container { flex-shrink: 0; text-align: center; }
-        .nugget-img { 
-            width: 150px; 
-            height: auto; 
-            border-radius: 50%; 
-            border: 4px solid #6f42c1; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            background-color: #fff;
-        }
+        .nugget-img { width: 150px; height: auto; border-radius: 50%; border: 4px solid #6f42c1; box-shadow: 0 4px 8px rgba(0,0,0,0.2); background-color: #fff; }
         .help-text-container { flex-grow: 1; text-align: left; }
-        
-        @media (max-width: 600px) {
-            .help-layout { flex-direction: column; align-items: center; }
-            .nugget-img { width: 100px; }
-        }
+        @media (max-width: 600px) { .help-layout { flex-direction: column; align-items: center; } .nugget-img { width: 100px; } }
 
-        /* --- VISUAL EXAMPLE STYLES --- */
-        .visual-example-container {
-            position: relative; display: flex; justify-content: center; align-items: center;
-            height: 160px; background: #f8f9fa; border-radius: 10px; margin: 20px 0; border: 2px solid #e9ecef;
-        }
+        /* CERTIFICATE */
+        .cert-container { border: 5px solid #007bff; padding: 20px; border-radius: 10px; background: #e7f1ff; margin-top: 20px; text-align: center;}
+        .cert-name { font-size: 32px; font-weight: bold; color: #0056b3; margin: 10px 0; text-transform: capitalize; }
+        .cert-code { font-family: monospace; background: #fff; padding: 5px 10px; border-radius: 4px; font-size: 14px; margin-top: 10px; display: inline-block; border: 1px solid #ccc; }
+        #nameInput { padding: 10px; font-size: 18px; width: 70%; margin-bottom: 10px; border: 2px solid #ccc; border-radius: 5px; }
+        
+        /* VISUAL HELP STYLES */
+        .visual-example-container { position: relative; display: flex; justify-content: center; align-items: center; height: 160px; background: #f8f9fa; border-radius: 10px; margin: 20px 0; border: 2px solid #e9ecef; }
         .visual-fractions { display: flex; align-items: center; gap: 60px; z-index: 2; }
         .arrow-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
         .cancel-red { text-decoration: line-through; text-decoration-thickness: 3px; color: #dc3545; }
         .factor-text { font-family: inherit; font-weight: bold; font-size: 24px; }
-
-        /* Certificate */
-        .cert-container { border: 5px solid #28a745; padding: 20px; border-radius: 10px; background: #f0fff4; margin-top: 20px; text-align: center;}
-        .cert-name { font-size: 32px; font-weight: bold; color: #28a745; margin: 10px 0; text-transform: capitalize; }
-        .cert-code { font-family: monospace; background: #eee; padding: 5px 10px; border-radius: 4px; font-size: 14px; margin-top: 10px; display: inline-block; }
-        #nameInput { padding: 10px; font-size: 18px; width: 70%; margin-bottom: 10px; border: 2px solid #ccc; border-radius: 5px; }
-
     </style>
 </head>
 <body>
 
-    <h1 id="mainTitle">Part 1: Equivalent Fractions</h1>
-    <p class="subtitle" id="subTitle">Fill in the missing box to make the fractions equivalent.</p>
-    
-    <div class="progress-wrapper">
-        <div class="progress-segment" id="prog1">Part 1</div>
-        <div class="progress-segment" id="prog2">Part 2</div>
-        <div class="progress-segment" id="prog3">Part 3</div>
+    <div id="game-container" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+        <h1 id="mainTitle">Part 1: Equivalent Fractions</h1>
+        <p class="subtitle" id="subTitle">Fill in the missing box to make the fractions equivalent.</p>
+        
+        <div class="progress-wrapper">
+            <div class="progress-segment" id="prog1">Part 1</div>
+            <div class="progress-segment" id="prog2">Part 2</div>
+            <div class="progress-segment" id="prog3">Part 3</div>
+        </div>
+
+        <div class="controls">
+            <button class="btn-help" onclick="openHelp()">How do I do this? Ask Nugget! 🐹</button>
+            <button class="btn-reset" onclick="resetSection()">Reset Section</button>
+            <button class="btn-new" onclick="generateCurrentPart()">New Problems</button>
+        </div>
+
+        <div id="part1" class="worksheet-section"></div>
+        <div id="part2" class="worksheet-section hidden"></div>
+        <div id="part3" class="worksheet-section hidden"></div>
+
+        <div style="text-align:center; height: 100px;">
+            <button id="btnPart1" class="nav-btn" onclick="switchPart(2)">Done! Go to Part 2 &rarr;</button>
+            <button id="btnPart2" class="nav-btn" onclick="switchPart(3)">Great Job! Go to Part 3 &rarr;</button>
+            <button id="btnFinish" class="nav-btn" onclick="openCertificateModal()">✅ Finish & Get Certificate</button>
+        </div>
     </div>
 
-    <div class="controls">
-        <button class="btn-help" onclick="openHelp()">How do I do this? Ask Nugget! 🐹</button>
-        <button class="btn-reset" onclick="resetSection()">Reset Section</button>
-        <button class="btn-new" onclick="generateCurrentPart()">New Problems</button>
-    </div>
-
-    <div id="part1" class="worksheet-section"></div>
-    <div id="part2" class="worksheet-section hidden"></div>
-    <div id="part3" class="worksheet-section hidden"></div>
-
-    <div style="text-align:center; height: 100px;">
-        <button id="btnPart1" class="nav-btn" onclick="switchPart(2)">Done! Go to Part 2 &rarr;</button>
-        <button id="btnPart2" class="nav-btn" onclick="switchPart(3)">Great Job! Go to Part 3 &rarr;</button>
-        <button id="btnFinish" class="nav-btn" onclick="openCertificateModal()">✅ Finish & Get Certificate</button>
+    <div id="certificate-view" style="display:none; width: 100%; max-width: 800px; text-align:center;">
+        <p><strong>Take a Screenshot</strong> of this blue box.</p>
+        <div class="cert-container">
+            <h2 style="color:#0056b3; margin-top:0;">⭐ FRACTIONS WITH NUGGET 1 ⭐</h2>
+            <div class="cert-name" id="display-name">Student Name</div>
+            <p>Has successfully completed all parts of Fractions with Nugget 1:</p>
+            <ul style="list-style:none; padding:0; font-size:14px; color:#555; line-height:1.6;">
+                <li>Part 1: Equivalent Fractions</li>
+                <li>Part 2: Simplifying Fractions</li>
+                <li>Part 3: Comparing Fractions</li>
+            </ul>
+            <div style="font-weight:bold; color:#555;" id="display-time"></div>
+            <div class="cert-code" id="display-code"></div>
+            
+            <div style="margin-top:20px; display:flex; justify-content:center; align-items:center; gap:10px;">
+                <img src="Nugget.png" style="width:60px; height:60px; border-radius:50%; border:3px solid #0056b3;">
+                <div style="font-family:'Brush Script MT', cursive; font-size:24px; color:#0056b3;">
+                    Nugget <span style="font-size:20px;">🐾</span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="helpModal" class="modal-overlay" onclick="closeHelpOutside(event)">
@@ -228,7 +150,7 @@
                     <p style="font-weight:bold; color:#6f42c1; margin-top:5px;">Nugget says:</p>
                 </div>
                 <div class="help-text-container">
-                    <h2 class="modal-title" id="modalTitle">Example</h2>
+                    <h2 class="modal-title" id="modalTitle"></h2>
                     <div class="modal-body" id="modalBody"></div>
                 </div>
             </div>
@@ -240,38 +162,23 @@
             <span class="close-btn" onclick="closeCert()">&times;</span>
             <h2 class="modal-title">Activity Complete!</h2>
             <div id="certEntry">
-                <p>Please enter your full name to generate your completion ticket.</p>
+                <p>Please enter your full name:</p>
                 <input type="text" id="nameInput" placeholder="Enter Full Name Here">
                 <br><br>
                 <button class="btn-new" onclick="generateCertificate()">Generate Certificate</button>
-            </div>
-            <div id="certDisplay" style="display:none;">
-                <p><strong>Take a Screenshot</strong> of this green box and submit it to your teacher.</p>
-                <div class="cert-container">
-                    <div>⭐ FRACTION MASTERY: BASICS ⭐</div>
-                    <div class="cert-name" id="display-name">Student Name</div>
-                    <div style="font-weight:bold; color:#555;" id="display-time"></div>
-                    <div>Has successfully completed all 3 sections.</div>
-                    <div class="cert-code" id="display-code"></div>
-                    <br>
-                    <div style="margin-top:15px; font-size:14px; color:#555;">Nugget is proud of you! 🐹</div>
-                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // CONFIG
         const QUESTIONS_P1 = 6;
         const QUESTIONS_P2 = 6;
         const QUESTIONS_P3 = 5; 
         let currentPart = 1;
 
-        // UTILS
         function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
         function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
 
-        // HTML BUILDERS
         function buildInputOrText(val, isInput, answer, placeholder="?", className="box") {
             if (isInput) {
                 if(currentPart === 1) {
@@ -285,15 +192,9 @@
 
         function createFractionHTML(n1, d1, n2, d2, operator="=") {
             return `
-                <div class="fraction">
-                    <div class="numerator-container">${n1}</div>
-                    <div class="denominator-container">${d1}</div>
-                </div>
+                <div class="fraction"><div class="numerator-container">${n1}</div><div class="denominator-container">${d1}</div></div>
                 <span class="operator">${operator}</span>
-                <div class="fraction">
-                    <div class="numerator-container">${n2}</div>
-                    <div class="denominator-container">${d2}</div>
-                </div>`;
+                <div class="fraction"><div class="numerator-container">${n2}</div><div class="denominator-container">${d2}</div></div>`;
         }
 
         // --- PART 1 ---
@@ -305,12 +206,10 @@
                 const multiplier = getRandomInt(2, 6);
                 const vals = [baseNum, baseDen, baseNum * multiplier, baseDen * multiplier];
                 const blankIndex = getRandomInt(0, 3);
-
                 const n1 = buildInputOrText(vals[0], blankIndex === 0, vals[0], "?", "p1-box");
                 const d1 = buildInputOrText(vals[1], blankIndex === 1, vals[1], "?", "p1-box");
                 const n2 = buildInputOrText(vals[2], blankIndex === 2, vals[2], "?", "p1-box");
                 const d2 = buildInputOrText(vals[3], blankIndex === 3, vals[3], "?", "p1-box");
-
                 const row = document.createElement('div');
                 row.className = 'problem-row';
                 row.innerHTML = createFractionHTML(n1, d1, n2, d2);
@@ -333,27 +232,20 @@
             const grid = document.getElementById('part2'); grid.innerHTML = '';
             for (let i = 0; i < QUESTIONS_P2; i++) {
                 let sNum, sDen;
-                do {
-                    sNum = getRandomInt(1, 8);
-                    sDen = getRandomInt(sNum + 1, 12);
-                } while (gcd(sNum, sDen) !== 1);
-
+                do { sNum = getRandomInt(1, 8); sDen = getRandomInt(sNum + 1, 12); } while (gcd(sNum, sDen) !== 1);
                 const mult = getRandomInt(2, 5);
                 const qNum = sNum * mult;
                 const qDen = sDen * mult;
-
                 const n1 = `<span class="number-text">${qNum}</span>`;
                 const d1 = `<span class="number-text">${qDen}</span>`;
                 const n2 = `<input type="number" class="p2-box" id="p2-num-${i}" placeholder="?">`;
                 const d2 = `<input type="number" class="p2-box" id="p2-den-${i}" placeholder="?">`;
-
                 const row = document.createElement('div');
                 row.className = 'problem-row';
                 row.setAttribute('data-qnum', qNum);
                 row.setAttribute('data-qden', qDen);
                 row.innerHTML = createFractionHTML(n1, d1, n2, d2);
                 grid.appendChild(row);
-
                 document.getElementById(`p2-num-${i}`).addEventListener('input', () => checkPart2(i));
                 document.getElementById(`p2-den-${i}`).addEventListener('input', () => checkPart2(i));
             }
@@ -367,13 +259,10 @@
             const userDen = parseInt(denInput.value);
             const origNum = parseInt(row.getAttribute('data-qnum'));
             const origDen = parseInt(row.getAttribute('data-qden'));
-
             numInput.className = 'p2-box'; denInput.className = 'p2-box';
             if (!numInput.value || !denInput.value) return;
-
             const valUser = userNum / userDen;
             const valOrig = origNum / origDen;
-
             if (Math.abs(valUser - valOrig) > 0.0001) {
                 numInput.classList.add('incorrect'); denInput.classList.add('incorrect');
             } else {
@@ -390,7 +279,6 @@
         function generatePart3() {
             const grid = document.getElementById('part3'); grid.innerHTML = '';
             const equalsIndex = getRandomInt(0, QUESTIONS_P3 - 1);
-
             for (let i = 0; i < QUESTIONS_P3; i++) {
                 let n1, d1, n2, d2;
                 if (i === equalsIndex) {
@@ -402,42 +290,18 @@
                     n1 = baseN * m1; d1 = baseD * m1;
                     n2 = baseN * m2; d2 = baseD * m2;
                 } else {
-                    do {
-                        n1 = getRandomInt(1, 5); d1 = getRandomInt(2, 8);
-                        n2 = getRandomInt(1, 5); d2 = getRandomInt(2, 8);
-                    } while (Math.abs((n1/d1) - (n2/d2)) < 0.0001);
+                    do { n1 = getRandomInt(1, 5); d1 = getRandomInt(2, 8); n2 = getRandomInt(1, 5); d2 = getRandomInt(2, 8); } while (Math.abs((n1/d1) - (n2/d2)) < 0.0001);
                 }
-
                 const row = document.createElement('div');
                 row.className = 'problem-row-p3';
                 row.setAttribute('data-n1', n1); row.setAttribute('data-d1', d1);
                 row.setAttribute('data-n2', n2); row.setAttribute('data-d2', d2);
-
-                const leftGroup = `
-                    <div class="group-container">
-                        <div class="fraction"><span class="number-text" style="border-bottom:3px solid #333; display:block; padding:0 5px; margin-bottom:5px;">${n1}</span><span class="number-text">${d1}</span></div>
-                        <span class="operator">=</span>
-                        <div class="fraction"><div class="numerator-container"><input type="number" class="p3-box" id="p3-n1-${i}" placeholder="?"></div><div class="denominator-container"><input type="number" class="p3-box" id="p3-d1-${i}" placeholder="?"></div></div>
-                    </div>`;
-
-                const selector = `
-                    <select class="symbol-selector" id="p3-sel-${i}">
-                        <option value="">?</option><option value="<">&lt;</option><option value=">">&gt;</option><option value="=">=</option>
-                    </select>`;
-
-                const rightGroup = `
-                    <div class="group-container">
-                        <div class="fraction"><div class="numerator-container"><input type="number" class="p3-box" id="p3-n2-${i}" placeholder="?"></div><div class="denominator-container"><input type="number" class="p3-box" id="p3-d2-${i}" placeholder="?"></div></div>
-                        <span class="operator">=</span>
-                        <div class="fraction"><span class="number-text" style="border-bottom:3px solid #333; display:block; padding:0 5px; margin-bottom:5px;">${n2}</span><span class="number-text">${d2}</span></div>
-                    </div>`;
-
-                row.innerHTML = leftGroup + selector + rightGroup;
+                row.innerHTML = `
+                    <div class="group-container"><div class="fraction"><span class="number-text" style="border-bottom:3px solid #333; display:block; padding:0 5px; margin-bottom:5px;">${n1}</span><span class="number-text">${d1}</span></div><span class="operator">=</span><div class="fraction"><div class="numerator-container"><input type="number" class="p3-box" id="p3-n1-${i}" placeholder="?"></div><div class="denominator-container"><input type="number" class="p3-box" id="p3-d1-${i}" placeholder="?"></div></div></div>
+                    <select class="symbol-selector" id="p3-sel-${i}"><option value="">?</option><option value="<">&lt;</option><option value=">">&gt;</option><option value="=">=</option></select>
+                    <div class="group-container"><div class="fraction"><div class="numerator-container"><input type="number" class="p3-box" id="p3-n2-${i}" placeholder="?"></div><div class="denominator-container"><input type="number" class="p3-box" id="p3-d2-${i}" placeholder="?"></div></div><span class="operator">=</span><div class="fraction"><span class="number-text" style="border-bottom:3px solid #333; display:block; padding:0 5px; margin-bottom:5px;">${n2}</span><span class="number-text">${d2}</span></div></div>`;
                 grid.appendChild(row);
-
-                [`p3-n1-${i}`, `p3-d1-${i}`, `p3-n2-${i}`, `p3-d2-${i}`, `p3-sel-${i}`].forEach(id => {
-                    document.getElementById(id).addEventListener('input', () => checkPart3(i));
-                });
+                [`p3-n1-${i}`, `p3-d1-${i}`, `p3-n2-${i}`, `p3-d2-${i}`, `p3-sel-${i}`].forEach(id => document.getElementById(id).addEventListener('input', () => checkPart3(i)));
             }
             updateCheck();
         }
@@ -447,24 +311,19 @@
             const un2 = document.getElementById(`p3-n2-${rowIndex}`);
             const ud2 = document.getElementById(`p3-d2-${rowIndex}`);
             const sel = document.getElementById(`p3-sel-${rowIndex}`);
-            
             const row = un1.closest('.problem-row-p3');
             const bn1 = parseInt(row.getAttribute('data-n1'));
             const bd1 = parseInt(row.getAttribute('data-d1'));
             const bn2 = parseInt(row.getAttribute('data-n2'));
             const bd2 = parseInt(row.getAttribute('data-d2'));
-
             [un1, ud1, un2, ud2].forEach(el => el.className = 'p3-box');
             sel.classList.remove('correct', 'incorrect');
-
             if(un1.value && ud1.value && un2.value && ud2.value) {
                 const v_un1 = parseInt(un1.value); const v_ud1 = parseInt(ud1.value);
                 const v_un2 = parseInt(un2.value); const v_ud2 = parseInt(ud2.value);
-
                 const leftEquiv = Math.abs((v_un1/v_ud1) - (bn1/bd1)) < 0.0001;
                 const rightEquiv = Math.abs((v_un2/v_ud2) - (bn2/bd2)) < 0.0001;
                 const commonDenom = (v_ud1 === v_ud2);
-
                 if (!leftEquiv || !rightEquiv) {
                     if(!leftEquiv) { un1.classList.add('incorrect'); ud1.classList.add('incorrect'); }
                     if(!rightEquiv) { un2.classList.add('incorrect'); ud2.classList.add('incorrect'); }
@@ -474,7 +333,6 @@
                     [un1, ud1, un2, ud2].forEach(el => el.classList.add('correct'));
                 }
             }
-
             if(sel.value) {
                 const leftVal = bn1 / bd1;
                 const rightVal = bn2 / bd2;
@@ -493,14 +351,10 @@
             if(currentPart === 1) { selector = '.p1-box'; btnId = 'btnPart1'; }
             else if(currentPart === 2) { selector = '.p2-box'; btnId = 'btnPart2'; }
             else { selector = '#part3 input, #part3 select'; btnId = 'btnFinish'; }
-
             const all = document.querySelectorAll(selector);
             let ok = true;
             let count = 0;
-            all.forEach(b => { 
-                count++;
-                if(!b.classList.contains('correct')) ok = false; 
-            });
+            all.forEach(b => { count++; if(!b.classList.contains('correct')) ok = false; });
             if(ok && count > 0) document.getElementById(btnId).style.display = 'inline-block';
             else document.getElementById(btnId).style.display = 'none';
         }
@@ -510,8 +364,6 @@
             document.getElementById(currentPart===3 ? 'btnFinish' : `btnPart${currentPart}`).style.display = 'none';
             currentPart = p;
             document.getElementById(`part${p}`).classList.remove('hidden');
-            
-            // Titles
             const titles = {
                 1: ["Part 1: Equivalent Fractions", "Fill in the missing box to make the fractions equivalent."],
                 2: ["Part 2: Simplify Fractions", "Reduce the fraction on the left to its simplest form."],
@@ -519,7 +371,6 @@
             };
             document.getElementById('mainTitle').innerText = titles[p][0];
             document.getElementById('subTitle').innerHTML = titles[p][1];
-            
             updateProgressBar(p);
             generateCurrentPart();
         }
@@ -540,7 +391,6 @@
         }
 
         function resetSection() {
-            // Clears inputs but keeps numbers
             const selector = currentPart === 1 ? '.p1-box' : (currentPart === 2 ? '.p2-box' : '.p3-box, .symbol-selector');
             document.querySelectorAll(selector).forEach(inp => {
                 inp.value = '';
@@ -550,7 +400,6 @@
             updateCheck();
         }
 
-        // --- MODAL & CERT ---
         function openHelp() {
             const modal = document.getElementById('helpModal');
             const title = document.getElementById('modalTitle');
@@ -611,25 +460,34 @@
                     <p>3. Now compare: 3/6 is bigger than 2/6, so <strong>1/2 > 1/3</strong>.</p>
                 `;
             }
-            document.getElementById('helpModal').style.display = 'flex';
+            modal.style.display = 'flex';
         }
 
         function closeHelp() { document.getElementById('helpModal').style.display = 'none'; }
         function closeHelpOutside(event) { if (event.target === document.getElementById('helpModal')) closeHelp(); }
         
-        function openCertificateModal() { document.getElementById('certModal').style.display = 'flex'; document.getElementById('certEntry').style.display = 'block'; document.getElementById('certDisplay').style.display = 'none'; }
+        function openCertificateModal() { document.getElementById('certModal').style.display = 'flex'; }
         function closeCert() { document.getElementById('certModal').style.display = 'none'; }
 
         function generateCertificate() {
             const name = document.getElementById('nameInput').value.trim();
             if(!name) { alert("Please enter your name."); return; }
+            
+            // Populate Certificate
             document.getElementById('display-name').innerText = name;
             document.getElementById('display-time').innerText = new Date().toLocaleString();
             document.getElementById('display-code').innerText = "Code: " + Math.floor(1000 + Math.random() * 9000);
-            document.getElementById('certEntry').style.display = 'none';
-            document.getElementById('certDisplay').style.display = 'block';
             
-            // Mark all segments done
+            // Hide Input Modal
+            document.getElementById('certModal').style.display = 'none';
+            
+            // Hide Game Content
+            document.getElementById('game-container').style.display = 'none';
+            
+            // Show Certificate View
+            document.getElementById('certificate-view').style.display = 'block';
+            
+            // Mark progress as all done (for visual completeness)
             [1,2,3].forEach(i => document.getElementById(`prog${i}`).className = 'progress-segment done');
         }
 
